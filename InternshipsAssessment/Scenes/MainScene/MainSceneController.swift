@@ -8,11 +8,17 @@
 
 import UIKit
 import DailymotionPlayerSDK
+import SafariServices
 
 class MainSceneController: UIViewController {
     private var customView: MainSceneView {
         return view as! MainSceneView
     }
+    fileprivate lazy var playerViewController: DMPlayerViewController = {
+        let controller = DMPlayerViewController(parameters: [:], allowPiP: false)
+      controller.delegate = self
+      return controller
+    }()
     private var videosListViewModel: VideosListViewModel?
 
     override func viewDidLoad() {
@@ -32,12 +38,26 @@ class MainSceneController: UIViewController {
             }
             self.customView.videosTableView.reloadData()
         }
+        
+        setupPlayerViewController()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.customView.videosTableView.delegate = nil
         self.customView.videosTableView.dataSource = nil
+    }
+    
+    private func setupPlayerViewController() {
+      addChild(playerViewController)
+      
+      let playerView = playerViewController.view!
+        customView.videoContainer.addSubview(playerView)
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        playerView.leadingAnchor.constraint(equalTo: customView.videoContainer.leadingAnchor).isActive = true
+        playerView.trailingAnchor.constraint(equalTo: customView.videoContainer.trailingAnchor).isActive = true
+        playerView.topAnchor.constraint(equalTo: customView.videoContainer.topAnchor).isActive = true
+        playerView.bottomAnchor.constraint(equalTo: customView.videoContainer.bottomAnchor).isActive = true
     }
 
 }
@@ -48,15 +68,16 @@ extension MainSceneController: DMPlayerViewControllerDelegate {
     }
     
     func player(_ player: DMPlayerViewController, openUrl url: URL) {
-        
+        let controller = SFSafariViewController(url: url)
+        present(controller, animated: true, completion: nil)
     }
     
     func playerDidInitialize(_ player: DMPlayerViewController) {
-        
+        print("Player Init Successfully")
     }
     
     func player(_ player: DMPlayerViewController, didFailToInitializeWithError error: Error) {
-        
+        print("Player Init Failed with error: \(error.localizedDescription)")
     }
     
 }
@@ -76,8 +97,17 @@ extension MainSceneController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let video = self.videosListViewModel?.videosViewModel?[indexPath.row] {
+            playerViewController.load(videoId: video.id)
+        }else {
+            UIAlertController.Builder()
+                .addAction(with: "OK", style: .default, handler: nil)
+            .withTitle("Model error")
+            .withMessage("exact video does not exist.")
+            .show(in: self)
+        }
+    }
     
 }
 
