@@ -9,11 +9,11 @@
 import Foundation
 
 protocol VideosRemoteRepositoryProtocol {
-    func getMostRecentVideos(completion:@escaping (Result<Videos, NetworkErrors>) -> ())
+    func getMostRecentVideos(completion:@escaping (Result<Videos, NetworkErrors>) -> Void)
 }
 
 class VideosRemoteRepository: VideosRemoteRepositoryProtocol {
-    func getMostRecentVideos(completion:@escaping (Result<Videos, NetworkErrors>) -> ()) {
+    func getMostRecentVideos(completion:@escaping (Result<Videos, NetworkErrors>) -> Void) {
             if let videosURL = URL(baseUrl: WebService.EndPoints.videos, queryItems: [:]) {
                 URLSession.shared.dataTask(with: URLRequest(url: videosURL)) { [weak self] data, response, error in
                     guard let self = self else { return }

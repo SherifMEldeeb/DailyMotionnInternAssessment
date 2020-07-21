@@ -38,3 +38,10 @@ class VideosRepository: VideosRepositoryProtocol {
     }
     
 }
+
+extension VideosRepository {
+    class func create(isConnected: Bool) -> VideosRepositoryProtocol {
+        let remoteVideosRepository = VideosRemoteRepository()
+        return VideosRepository(remoteVideosRepositories: remoteVideosRepository, isConnected: isConnected)
+    }
+}
