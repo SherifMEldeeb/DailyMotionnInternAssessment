@@ -10,10 +10,10 @@ import Foundation
 
 // MARK: - Video
 struct Videos: Codable {
-    let page, limit: Int
-    let explicit: Bool
-    let total: Int
-    let hasMore: Bool
+    let page, limit: Int?
+    let explicit: Bool?
+    let total: Int?
+    let hasMore: Bool?
     let list: [Video]
 
     enum CodingKeys: String, CodingKey {

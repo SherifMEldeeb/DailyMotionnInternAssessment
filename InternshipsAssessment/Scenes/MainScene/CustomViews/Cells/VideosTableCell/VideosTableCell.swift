@@ -21,7 +21,7 @@ class VideosTableCell: UITableViewCell {
     
     func configure(videoViewModel: VideoViewModel) {
         self.titleLabel.text = videoViewModel.title
-        self.channelLabel.text = videoViewModel.channel
+        self.channelLabel.text = "channel: \(videoViewModel.channel)"
     }
     
     private func setupCell() {

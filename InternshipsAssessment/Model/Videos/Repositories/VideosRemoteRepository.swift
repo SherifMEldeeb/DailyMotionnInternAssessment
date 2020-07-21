@@ -15,8 +15,9 @@ protocol VideosRemoteRepositoryProtocol {
 class VideosRemoteRepository: VideosRemoteRepositoryProtocol {
     func getMostRecentVideos(completion:@escaping (Result<Videos, NetworkErrors>) -> Void) {
             if let videosURL = URL(baseUrl: WebService.EndPoints.videos, queryItems: [:]) {
-                URLSession.shared.dataTask(with: URLRequest(url: videosURL)) { [weak self] data, response, error in
-                    guard let self = self else { return }
+                var request = URLRequest(url: videosURL)
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                URLSession.shared.dataTask(with: request) { data, response, error in
                     guard let status = (response as? HTTPURLResponse)?.statusCode else {
                         if let err = error {
                             completion(.failure(.requestFailed(err)))
@@ -24,12 +25,14 @@ class VideosRemoteRepository: VideosRemoteRepositoryProtocol {
                         return
                     }
                     if status == 200 {
-                        guard let data: Data = data,
-                            let videos: Videos = try? self.decode(data: data) else {
-                                completion(.failure(.decodingFailed))
-                            return
+                        guard let data: Data = data else { return }
+                        do {
+                            let videos: Videos = try self.decode(data: data)
+                            completion(.success(videos))
+                        }catch(let err) {
+                            print(err.localizedDescription)
+                            completion(.failure(.decodingFailed))
                         }
-                        completion(.success(videos))
                     }else {
                         if let err = error {
                           completion(.failure(.requestFailed(err)))

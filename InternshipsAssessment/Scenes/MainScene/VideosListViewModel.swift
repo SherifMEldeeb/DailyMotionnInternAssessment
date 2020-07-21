@@ -18,10 +18,14 @@ class VideosListViewModel {
                 self.videosViewModel = vids.list.map {
                     VideoViewModel($0)
                 }
-                completionWithFailure(nil)
+                DispatchQueue.main.async {
+                    completionWithFailure(nil)
+                }
             case .failure(let err):
                 self.videosViewModel = nil
-                completionWithFailure(err)
+                DispatchQueue.main.async {
+                    completionWithFailure(err)
+                }
             }
         }
     }
