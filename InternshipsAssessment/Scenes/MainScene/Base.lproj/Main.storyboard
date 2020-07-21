@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="InternshipsAssessment" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="MainSceneView" customModule="InternshipsAssessment" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9D-Oo-ZNz">
+                                <rect key="frame" x="0.0" y="44" width="414" height="224"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Oa0-nY-Q4n">
+                                <rect key="frame" x="8" y="276" width="398" height="578"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="A9D-Oo-ZNz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="H6b-Vj-zPo"/>
+                            <constraint firstItem="A9D-Oo-ZNz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="WNe-qo-z5D"/>
+                            <constraint firstItem="A9D-Oo-ZNz" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="dbZ-6g-sct"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Oa0-nY-Q4n" secondAttribute="bottom" constant="8" id="g2K-5X-siN"/>
+                            <constraint firstItem="Oa0-nY-Q4n" firstAttribute="top" secondItem="A9D-Oo-ZNz" secondAttribute="bottom" constant="8" id="nv3-22-zxt"/>
+                            <constraint firstItem="A9D-Oo-ZNz" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:4" id="opd-eN-6SG"/>
+                            <constraint firstItem="Oa0-nY-Q4n" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="-16" id="rgf-mp-eVA"/>
+                            <constraint firstItem="Oa0-nY-Q4n" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="yam-lE-c18"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outlet property="videoContainer" destination="A9D-Oo-ZNz" id="zNI-gr-BvG"/>
+                            <outlet property="videosTableView" destination="Oa0-nY-Q4n" id="x2x-Dn-G4x"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="96.428571428571431"/>
+        </scene>
+    </scenes>
+</document>
