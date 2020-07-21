@@ -17,6 +17,9 @@ class MainSceneController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.customView.videosTableView.delegate = self
+        self.customView.videosTableView.dataSource = self
+
         self.videosListViewModel = VideosListViewModel(videosRepository: VideosRepository.create(isConnected: true)) { [weak self] error in
             guard let self = self else { return }
             if let err = error {
@@ -30,39 +33,50 @@ class MainSceneController: UIViewController {
             self.customView.videosTableView.reloadData()
         }
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.customView.videosTableView.delegate = nil
+        self.customView.videosTableView.dataSource = nil
+    }
 
 }
 
 extension MainSceneController: DMPlayerViewControllerDelegate {
     func player(_ player: DMPlayerViewController, didReceiveEvent event: PlayerEvent) {
-        <#code#>
+        
     }
     
     func player(_ player: DMPlayerViewController, openUrl url: URL) {
-        <#code#>
+        
     }
     
     func playerDidInitialize(_ player: DMPlayerViewController) {
-        <#code#>
+        
     }
     
     func player(_ player: DMPlayerViewController, didFailToInitializeWithError error: Error) {
-        <#code#>
+        
     }
     
 }
 
 extension MainSceneController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.videosListViewModel?.videosViewModel.count ?? 0
+        return self.videosListViewModel?.videosViewModel?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideosTableCell.className, for: indexPath) as! VideosTableCell
-        
+        if let video = self.videosListViewModel?.videosViewModel?[indexPath.row] {
+            cell.configure(videoViewModel: video)
+        }else {
+            cell.configure(videoViewModel: VideoViewModel(Video(id: "000", title: "title", channel: "channel", owner: "owner")))
+        }
         return cell
     }
+    
+    
     
     
 }

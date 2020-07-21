@@ -25,13 +25,6 @@ struct Videos: Codable {
 
 // MARK: - List
 struct Video: Codable {
-    let id, title: String
-    let channel: Channel
+    let id, title, channel: String
     let owner: String
-}
-
-enum Channel: String, Codable {
-    case news = "news"
-    case shortfilms = "shortfilms"
-    case tv = "tv"
 }

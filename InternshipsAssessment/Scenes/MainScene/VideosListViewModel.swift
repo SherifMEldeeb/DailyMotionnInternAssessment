@@ -9,11 +9,10 @@
 import Foundation
 
 class VideosListViewModel {
-    var videosViewModel: [VideoViewModel]
+    var videosViewModel: [VideoViewModel]?
     
     init(videosRepository: VideosRepositoryProtocol, completionWithFailure:@escaping (Error?) -> Void) {
-        videosRepository.getMostRecentVideos { [weak self] result in
-            guard let self = self else { return }
+        videosRepository.getMostRecentVideos { result in
             switch result {
             case .success(let vids):
                 self.videosViewModel = vids.list.map {
@@ -21,6 +20,7 @@ class VideosListViewModel {
                 }
                 completionWithFailure(nil)
             case .failure(let err):
+                self.videosViewModel = nil
                 completionWithFailure(err)
             }
         }
@@ -29,7 +29,7 @@ class VideosListViewModel {
 
 class VideoViewModel {
     let id, title: String
-    let channel: Channel
+    let channel: String
     let owner: String
     
     init(_ video: Video) {
